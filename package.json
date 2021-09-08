@@ -1,25 +1,47 @@
 {
+  "name": "circumnavigation",
+  "version": "0.0.1",
+  "description": "Miles counting app",
+  "license": "BSD-3-Clause",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "prettier": "prettier --list-different './App.tsx'",
+    "prettier:fix": "prettier --write './App.tsx'",
+    "eslint": "eslint './App.tsx'",
+    "eslint:fix": "eslint './App.tsx' --fix",
+    "lint": "yarn prettier && yarn eslint && yarn tsc",
+    "format": "yarn prettier:fix && yarn eslint:fix",
+    "test": "yarn format",
+    "build:ios": "expo build:ios",
+    "build:android": "expo build:android",
+    "publish": "EXPO_USE_DEV_SERVER=true expo publish --non-interactive",
     "eject": "expo eject"
   },
   "dependencies": {
+    "@emotion/native": "^11.0.0",
+    "@emotion/react": "^11.4.1",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/styled-components": "^5.1.14",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.3.2",
     "typescript": "~4.0.0"
-  },
-  "private": true
+  }
 }
