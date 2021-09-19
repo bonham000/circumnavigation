@@ -54,7 +54,7 @@ export default function App() {
   return (
     <RootSiblingParent>
       <Screen>
-        <Title style={{ marginTop: 24 }}>Current Miles:</Title>
+        <Title style={{ marginTop: 52 }}>Current Miles:</Title>
         <MilesText>{miles}</MilesText>
         <Circle>
           {isEdit ? (

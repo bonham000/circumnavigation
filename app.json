@@ -2,7 +2,7 @@
   "expo": {
     "name": "circumnavigation",
     "slug": "circumnavigation",
-    "version": "1.0.03",
+    "version": "1.0.04",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
