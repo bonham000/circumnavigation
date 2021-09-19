@@ -10,21 +10,30 @@ import styled from "@emotion/native";
 
 const STORAGE_KEY = "@@miles";
 
+const TARGET_MILES = 25_000;
+
 export default function App() {
   const [miles, setMiles] = React.useState(0);
+  const [isEdit, setEdit] = React.useState(false);
+
+  const init = async () => {
+    const miles = await getMilesAsync();
+    setMiles(miles);
+  };
 
   React.useEffect(() => {
-    const init = async () => {
-      const miles = await getMilesAsync();
-      setMiles(miles);
-    };
-
     init();
   }, []);
 
-  React.useEffect(() => {
+  const save = () => {
     setMilesAsync(miles);
-  });
+    setEdit(false);
+  };
+
+  const cancel = () => {
+    setEdit(false);
+    init();
+  };
 
   const decrementMiles = () => {
     setMiles(Math.max(miles - 1, 0));
@@ -39,17 +48,38 @@ export default function App() {
       <Title>Current Miles:</Title>
       <MilesText>{miles}</MilesText>
       <Circle>
-        <Buttons>
-          <Subtract onPress={decrementMiles}>
-            <ButtonText>-</ButtonText>
-          </Subtract>
-          <Add onPress={incrementMiles}>
-            <ButtonText>+</ButtonText>
-          </Add>
-        </Buttons>
+        {isEdit ? (
+          <ButtonsContainer>
+            <ButtonsRow>
+              <ControlButton onPress={cancel}>
+                <SmallButtonText>Cancel</SmallButtonText>
+              </ControlButton>
+            </ButtonsRow>
+            <ButtonsRow>
+              <Subtract onPress={decrementMiles}>
+                <ButtonText>-</ButtonText>
+              </Subtract>
+              <Add onPress={incrementMiles}>
+                <ButtonText>+</ButtonText>
+              </Add>
+            </ButtonsRow>
+            <ButtonsRow>
+              <ControlButton onPress={save}>
+                <SmallButtonText>Save</SmallButtonText>
+              </ControlButton>
+            </ButtonsRow>
+          </ButtonsContainer>
+        ) : (
+          <ControlButton onPress={() => setEdit(true)}>
+            <SmallButtonText>Unlock</SmallButtonText>
+          </ControlButton>
+        )}
       </Circle>
       <Title>Target Miles:</Title>
-      <MilesText>25,000</MilesText>
+      <MilesText>{TARGET_MILES.toLocaleString()}</MilesText>
+      <CompletionText>
+        {((miles / TARGET_MILES) * 100).toFixed(2)}% complete
+      </CompletionText>
       <StatusBar style="auto" />
     </Screen>
   );
@@ -115,8 +145,15 @@ const Circle = styled.View`
   justify-content: center;
 `;
 
-const Buttons = styled.View`
+const ButtonsContainer = styled.View`
+  flex-direction: column;
+`;
+
+const ButtonsRow = styled.View`
   flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Button = styled.TouchableOpacity`
@@ -128,8 +165,30 @@ const Button = styled.TouchableOpacity`
   border-radius: 2px;
 `;
 
+const ControlButton = styled.TouchableOpacity`
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 128px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #25ffe9;
+`;
+
 const ButtonText = styled.Text`
   font-size: 55px;
+`;
+
+const SmallButtonText = styled.Text`
+  font-size: 22px;
+  font-weight: 500;
+`;
+
+const CompletionText = styled.Text`
+  margin-top: 2px;
+  font-size: 18px;
 `;
 
 const Add = styled(Button)`
