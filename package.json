@@ -19,6 +19,7 @@
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
     "publish": "EXPO_USE_DEV_SERVER=true expo publish --non-interactive",
+    "ota": "yarn run publish",
     "eject": "expo eject"
   },
   "dependencies": {
