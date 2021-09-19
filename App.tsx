@@ -144,10 +144,10 @@ const MilesText = styled(Title)`
 `;
 
 const Circle = styled.View`
-  margin-top: 32px;
+  margin-top: 16px;
   margin-bottom: 32px;
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   border-radius: 200px;
   background-color: #faf178;
   display: flex;
