@@ -54,7 +54,7 @@ export default function App() {
   return (
     <RootSiblingParent>
       <Screen>
-        <Title>Current Miles:</Title>
+        <Title style={{ marginTop: 24 }}>Current Miles:</Title>
         <MilesText>{miles}</MilesText>
         <Circle>
           {isEdit ? (
@@ -167,8 +167,8 @@ const ButtonsRow = styled.View`
 `;
 
 const Button = styled.TouchableOpacity`
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   display: flex;
   align-items: center;
   justify-content: center;
