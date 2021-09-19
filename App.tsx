@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import styled from "@emotion/native";
+import { RootSiblingParent } from "react-native-root-siblings";
+import Toast from "react-native-root-toast";
 
 /** ===========================================================================
  * App
@@ -25,9 +27,15 @@ export default function App() {
     init();
   }, []);
 
-  const save = () => {
-    setMilesAsync(miles);
+  const save = async () => {
+    const currentMiles = await getMilesAsync();
+
+    await setMilesAsync(miles);
     setEdit(false);
+
+    Toast.show(`Updated miles from ${currentMiles} to ${miles}.`, {
+      duration: 6000,
+    });
   };
 
   const cancel = () => {
@@ -44,44 +52,46 @@ export default function App() {
   };
 
   return (
-    <Screen>
-      <Title>Current Miles:</Title>
-      <MilesText>{miles}</MilesText>
-      <Circle>
-        {isEdit ? (
-          <ButtonsContainer>
-            <ButtonsRow>
-              <ControlButton onPress={cancel}>
-                <SmallButtonText>Cancel</SmallButtonText>
-              </ControlButton>
-            </ButtonsRow>
-            <ButtonsRow>
-              <Subtract onPress={decrementMiles}>
-                <ButtonText>-</ButtonText>
-              </Subtract>
-              <Add onPress={incrementMiles}>
-                <ButtonText>+</ButtonText>
-              </Add>
-            </ButtonsRow>
-            <ButtonsRow>
-              <ControlButton onPress={save}>
-                <SmallButtonText>Save</SmallButtonText>
-              </ControlButton>
-            </ButtonsRow>
-          </ButtonsContainer>
-        ) : (
-          <ControlButton onPress={() => setEdit(true)}>
-            <SmallButtonText>Unlock</SmallButtonText>
-          </ControlButton>
-        )}
-      </Circle>
-      <Title>Target Miles:</Title>
-      <MilesText>{TARGET_MILES.toLocaleString()}</MilesText>
-      <CompletionText>
-        {((miles / TARGET_MILES) * 100).toFixed(2)}% complete
-      </CompletionText>
-      <StatusBar style="auto" />
-    </Screen>
+    <RootSiblingParent>
+      <Screen>
+        <Title>Current Miles:</Title>
+        <MilesText>{miles}</MilesText>
+        <Circle>
+          {isEdit ? (
+            <ButtonsContainer>
+              <ButtonsRow>
+                <ControlButton onPress={cancel}>
+                  <SmallButtonText>Cancel</SmallButtonText>
+                </ControlButton>
+              </ButtonsRow>
+              <ButtonsRow>
+                <Subtract onPress={decrementMiles}>
+                  <ButtonText>-</ButtonText>
+                </Subtract>
+                <Add onPress={incrementMiles}>
+                  <ButtonText>+</ButtonText>
+                </Add>
+              </ButtonsRow>
+              <ButtonsRow>
+                <ControlButton onPress={save}>
+                  <SmallButtonText>Save</SmallButtonText>
+                </ControlButton>
+              </ButtonsRow>
+            </ButtonsContainer>
+          ) : (
+            <ControlButton onPress={() => setEdit(true)}>
+              <SmallButtonText>Unlock</SmallButtonText>
+            </ControlButton>
+          )}
+        </Circle>
+        <Title>Target Miles:</Title>
+        <MilesText>{TARGET_MILES.toLocaleString()}</MilesText>
+        <CompletionText>
+          {((miles / TARGET_MILES) * 100).toFixed(2)}% complete
+        </CompletionText>
+        <StatusBar style="auto" />
+      </Screen>
+    </RootSiblingParent>
   );
 }
 

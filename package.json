@@ -30,6 +30,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-root-siblings": "^4.1.1",
+    "react-native-root-toast": "^3.2.1",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.3.1"
   },
