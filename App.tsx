@@ -12,7 +12,7 @@ import Toast from "react-native-root-toast";
 
 const STORAGE_KEY = "@@miles";
 
-const TARGET_MILES = 25_000;
+const TARGET_MILES = 25000;
 
 export default function App() {
   const [miles, setMiles] = React.useState(0);
